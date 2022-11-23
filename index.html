@@ -1,0 +1,129 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Sketch Guidance</title>
+<link href="style.css" rel="stylesheet">
+  <script type="text/javascript" src="./files/prompt_switch.js"></script>
+</head>
+
+<body>
+<div class="content">
+  <h1>Sketch-Guided Text-to-Image Diffusion Models</h1>
+  <p id="authors"><a href="https://scholar.google.com/citations?user=imBjSgUAAAAJ">Andrey Voynov<sup>1</sup></a> <a href="https://kfiraberman.github.io/">Kfir Aberman<sup>1</sup></a> <a href="https://www.cs.tau.ac.il/~dcor/">Daniel Cohen-Or<sup>1,2</sup></a><br>
+
+  <span style="font-size: 16px"><sup>1</sup> Google Research &nbsp;&nbsp;<sup>2</sup> Tel Aviv University
+  </span></p>
+  <br><img src="./files/teaser_bike.png" class="teaser-img" style="width:100%;"><br>
+
+  <font size="+2">
+    <p style="text-align: center;">
+      <a href="./files/preprint.pdf" target="_blank">Paper</a> &nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://github.com/google/prompt-to-prompt/" target="_blank">Code <span style="font-size: 14px;">(Coming Soon)</a>
+    </p>
+  </font>
+</div>
+
+
+
+<div class="content">
+  <h2 style="text-align:center;">Abstract</h2>
+  <p>Text-to-Image models have introduced a remarkable leap in the evolution of machine learning, demonstrating high-quality synthesis of images from a given text-prompt. However, these powerful pretrained models still lack control handles that can guide spatial properties of the synthesized images. 
+    In this work, we introduce a universal approach to guide a pretrained text-to-image diffusion model, with a spatial map from another domain (e.g., sketch) during inference time. Unlike previous works, our method does not require  to train a dedicated model or a specialized encoder for the task.
+    Our key idea is to train a Latent Guidance Predictor (LGP) - a small, per-pixel, Multi-Layer Perceptron (MLP) that maps latent features of noisy images to spatial maps, where the deep features are extracted from the core Denoising Diffusion Probabilistic Model (DDPM) network.
+    The LGP is trained only on a few thousand of images and constitutes a differential guiding map predictor, over which the loss is computed and propagated back to push the intermediate images to agree with the spatial map.
+    The per-pixel training offers flexibility and locality which allows the technique to perform well on out-of-domain sketches, including free-hand style drawings.
+    We take a particular focus on the sketch-to-image translation task, revealing a robust and expressive way to generate images that follow the guidance of a sketch of arbitrary style or domain.
+  </p>
+</div>
+
+
+
+<div class="content">
+  <h2>Skect guidance</h2>
+  <p>Our method enables transfering hand-painted sketch into a natural highly-detailed image with a style control by any textual prompt.
+
+  <div>
+  <img class="summary-img" src="./files/all_samples_promo_crop.jpg" style="width:90%;">
+  </div>
+
+  <br>
+  <div>
+  Here you can vary a generated image description while keeping alignement with a sketch.
+  </div>
+  </br>
+
+  <div class="prompt-sweep-main">
+    <img class="prompt-sweep-img" id="prompt-sweep-img" src="./files/prompt_switch/default.png">
+    <div class="prompt-sweep-text">
+      <br><br>
+      <span class="prompt-sweep-bracket"><span class="prompt-sweep-button_a">Photograph_of</span> &ensp;&ensp;&ensp;&ensp;&ensp; <span class="prompt-sweep-button_a">3d_rendering_of</span> &ensp;&ensp;&ensp;&ensp;&ensp; <span class="prompt-sweep-button_a">Marc_Chagall_painting_of</span></span>
+      <br><br>
+      <span class="prompt-sweep-bracket"><span class="prompt-sweep-button_b">a_stag</span> &ensp;&ensp;&ensp;&ensp;&ensp; <span class="prompt-sweep-button_b">a_toy_stag</span> &ensp;&ensp;&ensp;&ensp;&ensp; <span class="prompt-sweep-button_b">a_reindeer</span> &ensp;&ensp;&ensp;&ensp;&ensp; <span class="prompt-sweep-button_b">a_statue_of_a_stag_made_of_flowers</span></span>
+      <br><br>
+      <span class="prompt-sweep-bracket"><span class="prompt-sweep-button_c">a_winter</span> &ensp;&ensp;&ensp;&ensp;&ensp; <span class="prompt-sweep-button_c">a_summer</span> &ensp;&ensp;&ensp;&ensp;&ensp; <span class="prompt-sweep-button_c">a_night</span></span>
+      <br><br>
+      <span class="prompt-sweep-bracket"><span class="prompt-sweep-button_d">in_forest</span> &ensp;&ensp;&ensp;&ensp;&ensp; <span class="prompt-sweep-button_d">on_field</span> &ensp;&ensp;&ensp;&ensp;&ensp; <span class="prompt-sweep-button_d">in_city</span></span>
+      <br><br>
+    <br><br>
+  </div> 
+</div>
+</div>
+
+
+
+<div class="content">
+<h2>Spatial guidance</h2>
+  <p>
+    The main idea is to perform a spatial guidance with gradients of a small model (we call it Latent Edge Predictor) that operates on intermediate DDPM activations.
+  </p>
+
+  <div>
+    <p>
+      Training scheme of the Latent Edge Predictor. Given an image, we first encode it and add noise to get a VQVAE representation.
+      Then we pass it through the core U-net network of a DDPM, and extract a set of latent spatial features.
+      Then our Latent Edge Predictor, which is a per-pixel MLP,
+      is trained to map each pixel in the concatenated features to the corresponding pixel in the encoded edge map.
+    </p>
+    <img class="summary-img" src="files/scheme_train.jpg">
+  </div>
+  <div>
+    <p>
+      Sketch-Guided Text-to-Image Synthesis Scheme.
+      Given an encoded noisy image, our method extracts its deep features during the inference process of a text-to-image diffusion model.
+      In each of the denoising steps t, we aggregate the intermediate model features,
+      and pass them in our per-pixel Latent Edge Predictor to predict the encoded edge map.
+      Then we calculate the gradient of the similarity between the desired edges w.r.t. the input,
+      and use it as a guidance for the denoising process that pushes the synthesized image to have edges close to the target edge map.
+    </p>
+    <img class="summary-img" src="files/scheme_inference.jpg">
+  </div>
+</div>
+
+
+
+<div class="content">
+
+  <h3>General spatial control</h3>
+  <p>Our approach is applicable to any spatial attributes. This image demonstrates the spatial guidance being applied to an inpainting DDPM to suppress,
+    and to increase saliency of a region on interest</p>
+  <img class="summary-img" src="./files/saliency.jpg" style="width:90%;">
+
+</div>
+
+
+<div class="content">
+  <h4>BibTex</h4>
+  <p> @article{voynov2022sketch2image,<br>
+  &nbsp;&nbsp;title={Sketch-Guided Text-to-Image Diffusion Models},<br>
+  &nbsp;&nbsp;author={Voynov, Andrey and Abernan, Kfir and Cohen-Or, Daniel},<br>
+  &nbsp;&nbsp;booktitle={arXiv preprint arXiv:TODO},<br>
+  &nbsp;&nbsp;year={2022}<br>
+  } </p>
+<br>
+   <h4>Acknowledgements</h4>
+  <p>
+    We thank TODO <a href="https://dreambooth.github.io/" style="text-decoration: none; color: black;">DreamBooth</a>.
+  </p>
+</div>
+</body>
+</html>
