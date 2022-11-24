@@ -23,8 +23,6 @@
   </font>
 </div>
 
-
-
 <div class="content">
   <h2 style="text-align:center;">Abstract</h2>
   <p>Text-to-Image models have introduced a remarkable leap in the evolution of machine learning, demonstrating high-quality synthesis of images from a given text-prompt. However, these powerful pretrained models still lack control handles that can guide spatial properties of the synthesized images. 
@@ -43,7 +41,7 @@
 
 
 <div class="content">
-  <h2>Skect guidance</h2>
+  <h2>Sketch-Guided Synthesis</h2>
   <p>Our method enables transfering hand-painted sketch into a natural highly-detailed image with a style control by any textual prompt.
   <br>
   <p>Here you can vary the generated image description while keeping alignement with the sketch.</p>
@@ -100,7 +98,7 @@
 
 
 <div class="content">
-<h2>Spatial guidance</h2>
+<h2>Approach</h2>
   <p>
     The main idea is to perform a spatial guidance with gradients of a small model (we call it Latent Edge Predictor) that operates on intermediate DDPM activations.
   </p>
@@ -131,26 +129,25 @@
 
 <div class="content">
 
-  <h3>General spatial control</h3>
+  <h3>General Spatial Control</h3>
   <p>Our approach is applicable to any spatial attributes. This image demonstrates the spatial guidance being applied to an inpainting DDPM to suppress,
     and to increase saliency of a region on interest</p>
   <img class="summary-img" src="./files/saliency.jpg" style="width:90%;">
 
 </div>
 
-
 <div class="content">
-  <h4>BibTex</h4>
-  <p> @article{voynov2022sketch2image,<br>
+  <h2>BibTex</h2>
+  <code>  @article{voynov2022sketch2image,<br>
   &nbsp;&nbsp;title={Sketch-Guided Text-to-Image Diffusion Models},<br>
   &nbsp;&nbsp;author={Voynov, Andrey and Abernan, Kfir and Cohen-Or, Daniel},<br>
   &nbsp;&nbsp;booktitle={arXiv preprint arXiv:TODO},<br>
   &nbsp;&nbsp;year={2022}<br>
-  } </p>
-<br>
-   <h4>Acknowledgements</h4>
-  <p>
-    We thank Chu Qinghao, Yael Vinker, Yael Pritch, Dani Valevski and David Salesin for their valuable inputs that helped improve this work. This page code is based on <a href="https://dreambooth.github.io/" style="text-decoration: none; color: black;">DreamBooth</a>.
+  } </code> 
+</div>
+<div class="content" id="acknowledgements">
+  <p><strong>Acknowledgements</strong>:
+We thank Chu Qinghao, Yael Vinker, Yael Pritch, Dani Valevski and David Salesin for their valuable inputs that helped improve this work. This page code is originated on <a href="https://dreambooth.github.io/" style="text-decoration: none; color: black;">DreamBooth</a>.
   </p>
 </div>
 
