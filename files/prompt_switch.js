@@ -9,8 +9,6 @@ function changeImage(){
     let p3 = prompts_parts[2][cur_parts[2]].innerHTML.replace(' ', '_').replace(' ', '_').replace(' ', '_');
 
     image.src = "./files/prompt_switch/" + p1 + "+" + p2 + "+" + p3 + "_0.png"
-    console.log('Image source:')
-    console.log(image.src)
 }
 
 function clearStyle(elem){
@@ -45,11 +43,9 @@ function set_alpha(slider, fluffy){
 
 function init() {
     image = document.getElementById("prompt-sweep-img");
-    console.log('p-length:', prompts_parts)
     for (let i_pp = 0; i_pp < prompts_parts.length; ++i_pp){
         litera = "abcdefg"[i_pp]
         prompts_parts[i_pp] = document.getElementsByClassName("prompt-sweep-button_" + litera);
-        console.log('set button for:', "prompt-sweep-button_" + litera)
         setStyle(prompts_parts[i_pp][cur_parts[i_pp]])
     }
 
@@ -60,16 +56,21 @@ function init() {
         }        
     }
 
-    // let slider = document.getElementById("range_bunny");
-    // let image_bunny = document.getElementById("bunny-img");
-    // let fluffy  = document.getElementById("fluffy");
-    // set_alpha(slider, fluffy)
-    // slider.oninput = function() {
-    //     // 248, 128, 0
-    //  image_bunny.src = "./ptp_files/bunny_seq/fluffy_bunny_" + String(slider.value).padStart(2, '0') + ".png";
-    //  set_alpha(slider, fluffy)
+    let slider = document.getElementById("range_fidelity");
+    let image_fidelity = document.getElementById("fidelity-img");
 
-    // }
+    slider.oninput = function() {
+        let val = String(slider.value)
+        if (val == "0"){
+            val = "0.0"
+        }
+        if (val == "1"){
+            val = "1.0"
+        }
+
+        image_fidelity.src = "./files/fidelity_seq/seed-0_ps-8.0_es-1.6_gs-" + val + ".png";
+
+    }
 }
 document.addEventListener("DOMContentLoaded", () => {
   init();

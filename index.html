@@ -34,6 +34,10 @@
     The per-pixel training offers flexibility and locality which allows the technique to perform well on out-of-domain sketches, including free-hand style drawings.
     We take a particular focus on the sketch-to-image translation task, revealing a robust and expressive way to generate images that follow the guidance of a sketch of arbitrary style or domain.
   </p>
+
+  <div>
+    <img class="summary-img" src="./files/all_samples_promo_crop.jpg" style="width:90%;">
+  </div>  
 </div>
 
 
@@ -41,37 +45,56 @@
 <div class="content">
   <h2>Skect guidance</h2>
   <p>Our method enables transfering hand-painted sketch into a natural highly-detailed image with a style control by any textual prompt.
-
-  <div>
-  <img class="summary-img" src="./files/all_samples_promo_crop.jpg" style="width:90%;">
-  </div>
-
   <br>
-  <br>
-  <div>
-  Here you can vary the generated image description while keeping alignement with the sketch.
-  </div>
-  </br>
+  <p>Here you can vary the generated image description while keeping alignement with the sketch.</p>
 
   <div class="prompt-sweep-main">
     <div class="prompt-sweep-text">
       <br>
       Sketch:
       <br>
-      <img src="./files/prompt_switch/sketch.png", style="width:40%">
+      <div class="container"><img src="./files/prompt_switch/sketch.png", style="width:60%"></div>
       <br>
       Prompt:
+      <div class="container">
       <br><br>
-      <span class="prompt-sweep-bracket"><span class="prompt-sweep-button_a">Summer</span> &ensp; <span class="prompt-sweep-button_a">Dramatic</span> &ensp; <span class="prompt-sweep-button_a">Cold colors</span></span>
-      <br><br>
-      <span class="prompt-sweep-bracket"><span class="prompt-sweep-button_b">photograph of</span> &ensp; <span class="prompt-sweep-button_b">3d rendering of</span> &ensp; <span class="prompt-sweep-button_b">Marc Chagall painting of</span></span>
-      <br><br>
-      <span class="prompt-sweep-bracket"><span class="prompt-sweep-button_c">a stag</span> &ensp; <span class="prompt-sweep-button_c">a toy stag</span> &ensp; <span class="prompt-sweep-button_c">an origami stag</span> &ensp; <span class="prompt-sweep-button_c">a ghost stag</span></span>
+      <span class="prompt-sweep-bracket"><span class="prompt-sweep-button_a">Summer</span> <br> <span class="prompt-sweep-button_a">Dramatic</span> <br> <span class="prompt-sweep-button_a">Cold colors</span></span>
+      &ensp;&ensp;&ensp;
+      <span class="prompt-sweep-bracket"><span class="prompt-sweep-button_b">photograph of</span> <br> <span class="prompt-sweep-button_b">3d rendering of</span> <br> <span class="prompt-sweep-button_b">Marc Chagall painting of</span></span>
+      &ensp;&ensp;&ensp;
+      <span class="prompt-sweep-bracket"><span class="prompt-sweep-button_c">a stag</span> <br> <span class="prompt-sweep-button_c">a toy stag</span> <br> <span class="prompt-sweep-button_c">an origami stag</span> <br> <span class="prompt-sweep-button_c">a ghost stag</span></span>
       <br>
+      </div>
     <br>
   </div> 
   <img class="prompt-sweep-img" id="prompt-sweep-img" src="./files/prompt_switch/default.png">
 </div>
+
+
+<br>
+<p>Another sketch-to-image synthesis control is the fidelity to the edges. It can be varied by changing the spatial guidance stop time.</p>
+<div class="prompt-sweep-main">
+  <div class="prompt-sweep-text">
+    <div class="container"><img src="./files/fidelity_seq/edges_ref.jpg", style="width:80%"></div>
+    <span style="display: block; text-align: center">Edges fidelity </span><br>
+    <div class="rotated">
+    <input type="range" min="0" max="0.9" value="0.5" step="0.1" class="slider" id="range_fidelity">
+    </div>
+  </div>
+  <br>
+  <img class="prompt-sweep-img" id="fidelity-img" src="./files/fidelity_seq/seed-0_ps-8.0_es-1.6_gs-0.5.png"><br>
+</div>
+
+<br>
+<br>
+<p>This video shows the intermediate results for the sketch of a T-Rex drawing process.</p>
+<div class="container">
+<video width="320" height="320" controls>
+  <source src="./files/output.webm", type="video/webm">
+  Your browser does not support the video tag.
+</video>
+</div>
+
 </div>
 
 
@@ -127,8 +150,10 @@
 <br>
    <h4>Acknowledgements</h4>
   <p>
-    We thank Chu Qinghao, Yael Vinker, Yael Pritch, Dani Valevski and David Salesin for their valuable inputs that helped improve this work. This page code is originated on <a href="https://dreambooth.github.io/" style="text-decoration: none; color: black;">DreamBooth</a>.
+    We thank Chu Qinghao, Yael Vinker, Yael Pritch, Dani Valevski and David Salesin for their valuable inputs that helped improve this work. This page code is based on <a href="https://dreambooth.github.io/" style="text-decoration: none; color: black;">DreamBooth</a>.
   </p>
 </div>
+
+
 </body>
 </html>
