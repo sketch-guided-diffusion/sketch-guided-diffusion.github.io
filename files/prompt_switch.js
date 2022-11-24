@@ -1,22 +1,14 @@
-var styles;
-var whats;
-var what_times;
-var wheres;
-
-var cur_style = 0;
-var cur_what = 0;
-var cur_what_time = 0;
-var cur_where = 0;
+var prompts_parts = [NaN, NaN, NaN];
+var cur_parts = [0, 0, 0];
 var image;
 
 
 function changeImage(){
-    let style = styles[cur_style].innerHTML;
-    let what = whats[cur_what].innerHTML;
-    let what_time = what_times[cur_what_time].innerHTML;
-    let where = wheres[cur_where].innerHTML;
+    let p1 = prompts_parts[0][cur_parts[0]].innerHTML.replace(' ', '_').replace(' ', '_').replace(' ', '_');
+    let p2 = prompts_parts[1][cur_parts[1]].innerHTML.replace(' ', '_').replace(' ', '_').replace(' ', '_');
+    let p3 = prompts_parts[2][cur_parts[2]].innerHTML.replace(' ', '_').replace(' ', '_').replace(' ', '_');
 
-    image.src = "./files/prompt_switch/" + style + "+" + what + "+" + what_time + "+" + where + "_0.png"
+    image.src = "./files/prompt_switch/" + p1 + "+" + p2 + "+" + p3 + "_0.png"
     console.log('Image source:')
     console.log(image.src)
 }
@@ -28,52 +20,15 @@ function clearStyle(elem){
 
 function setStyle(elem){
     elem.style.color = '#000000';
-    elem.style.backgroundColor = '#f88000';
+    elem.style.backgroundColor = '#31DC62';
 }
 
-function modifyStyle(i){
-    console.log('modify style', i)
+function modifyPrompt(prompt_indx, i){
     function inner_(){
-        if (cur_style !== i){
-            clearStyle(styles[cur_style]);
-            cur_style = i;
-            setStyle(styles[cur_style]);
-            changeImage();
-        }
-    }
-    return inner_
-}
-
-function modifyWhat(i){
-    function inner_(){
-        if (cur_what !== i){
-            clearStyle(whats[cur_what]);
-            cur_what = i;
-            setStyle(whats[cur_what]);
-            changeImage();
-        }
-    }
-    return inner_
-}
-
-function modifyWhatTime(i){
-    function inner_(){
-        if (cur_what_time !== i){
-            clearStyle(what_times[cur_what_time]);
-            cur_what_time = i;
-            setStyle(what_times[cur_what_time]);
-            changeImage();
-        }
-    }
-    return inner_
-}
-
-function modifyWhere(i){
-    function inner_(){
-        if (cur_where !== i){
-            clearStyle(wheres[cur_where]);
-            cur_where = i;
-            setStyle(wheres[cur_where]);
+        if (cur_parts[prompt_indx] !== i){
+            clearStyle(prompts_parts[prompt_indx][cur_parts[prompt_indx]]);
+            cur_parts[prompt_indx] = i;
+            setStyle(prompts_parts[prompt_indx][cur_parts[prompt_indx]]);
             changeImage();
         }
     }
@@ -90,24 +45,18 @@ function set_alpha(slider, fluffy){
 
 function init() {
     image = document.getElementById("prompt-sweep-img");
-	styles = document.getElementsByClassName("prompt-sweep-button_a");
-	whats = document.getElementsByClassName("prompt-sweep-button_b");
-	what_times = document.getElementsByClassName("prompt-sweep-button_c");
-	wheres = document.getElementsByClassName("prompt-sweep-button_d");
+    console.log('p-length:', prompts_parts)
+    for (let i_pp = 0; i_pp < prompts_parts.length; ++i_pp){
+        litera = "abcdefg"[i_pp]
+        prompts_parts[i_pp] = document.getElementsByClassName("prompt-sweep-button_" + litera);
+        console.log('set button for:', "prompt-sweep-button_" + litera)
+        setStyle(prompts_parts[i_pp][cur_parts[i_pp]])
+    }
 
-    setStyle(styles[cur_style]);
-    setStyle(whats[cur_what]);
-    setStyle(what_times[cur_what_time]);
-    setStyle(wheres[cur_where]);
-
-    var prompt_parts = [styles, whats, what_times, wheres];
-    var actions = [modifyStyle, modifyWhat, modifyWhatTime, modifyWhere];
-
-    for (let i_pp = 0; i_pp < prompt_parts.length; ++i_pp){
-        let prompt_part = prompt_parts[i_pp];
+    for (let i_pp = 0; i_pp < prompts_parts.length; ++i_pp){
+        let prompt_part = prompts_parts[i_pp];
         for (let i = 0; i < prompt_part.length; ++i){
-            console.log()
-            prompt_part[i].addEventListener("click", actions[i_pp](i));
+            prompt_part[i].addEventListener("click", modifyPrompt(i_pp, i));
         }        
     }
 

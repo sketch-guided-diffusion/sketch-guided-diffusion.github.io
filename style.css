@@ -185,7 +185,6 @@ p code {
 .prompt-sweep-button_a {
  color: #8e8e8e;
   cursor: pointer;
-
 }
 .prompt-sweep-button_b {
   color: #8e8e8e;
@@ -202,19 +201,19 @@ p code {
 
 .prompt-sweep-button_a:hover {
  color: #424242;
-  background-color: darksalmon;
+  background-color: rgb(175, 251, 191);
 }
 .prompt-sweep-button_b:hover {
  color: #424242;
-  background-color: darksalmon;
+  background-color: rgb(175, 251, 191);
 }
 .prompt-sweep-button_c:hover {
   color: #424242;
-   background-color: darksalmon;
+   background-color: rgb(175, 251, 191);
  }
  .prompt-sweep-button_d:hover {
   color: #424242;
-   background-color: darksalmon;
+   background-color: rgb(175, 251, 191);
  }
 
 
